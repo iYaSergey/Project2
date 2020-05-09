@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Data_Layer
 {
-    class Map
+    public class Map
     {
+        public Map()
+        {
+            States = new List<State>();
+        }
+        public List<State> States { get; set; }
     }
 }

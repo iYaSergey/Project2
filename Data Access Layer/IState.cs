@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data_Layer
+using Data_Layer;
+
+namespace Data_Access_Layer
 {
-    public class Class1
+    public interface IState
     {
+
     }
 }
