@@ -16,7 +16,6 @@ namespace Data_Layer
         public double Weight { get; set; }
         public List<Tweet> Tweets { get; set; }
 
-
         //
         public List<Tweet> Polygon { get; set; }
         //
