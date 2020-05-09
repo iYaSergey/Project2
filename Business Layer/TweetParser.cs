@@ -11,10 +11,15 @@ namespace Business_Layer
 {
     public class TweetParser
     {
-        public List<Tweet> Load(string path)
+        public TweetParser()
+        {
+            Sentiments = new SortedList<string, SortedList<string, double>>();
+        }
+        public SortedList<string, SortedList<string, double>> Load(string path)
         {
 
-            return null;
+            return Sentiments;
         }
+        public SortedList<string, SortedList<string, double>> Sentiments {get; set;}
     }
 }

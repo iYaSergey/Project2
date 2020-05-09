@@ -5,15 +5,15 @@ using Data_Layer;
 
 namespace Presentation_Layer
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        string path;
+
         public readonly IService service = new Service();
         public MainWindow()
         {
             InitializeComponent();
+            //service.ParseTweets(path);
         }
     }
 }

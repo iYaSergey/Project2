@@ -10,8 +10,10 @@ namespace Data_Layer
     {
         public Tweet()
         {
-
+            Location = new double[2];
         }
-        public double Sentiment { get; set; }
+        public string Text { get; set; }
+        public double Weight { get; set; }
+        public double[] Location { get; set; }
     }
 }
