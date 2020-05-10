@@ -11,6 +11,7 @@ namespace Business_Layer
 {
     public interface IBusiness
     {
-        void ParseTweets(string filename);
+        SortedList<string, string> GetFiles(string default_files);
+        Map ParseTweets(string path);
     }
 }

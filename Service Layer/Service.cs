@@ -1,20 +1,25 @@
-﻿using Business_Layer;
+﻿using System.Collections.Generic;
+using System.IO;
+
+using Business_Layer;
 using Data_Layer;
 
 namespace Service_Layer
 {
     public class Service : IService
     {
+        static readonly IBusiness business = new Business();
         public Service()
         {
 
         }
-
-        static readonly IBusiness business = new Business();
-
-        public void ParseTweets(string filename)
+        public SortedList<string, string> GetFiles(string default_path)
         {
-            throw new System.NotImplementedException();
+            return business.GetFiles(default_path);
+        }
+        public Map ParseTweets(string path)
+        {
+            return business.ParseTweets(path);
         }
     }
 }

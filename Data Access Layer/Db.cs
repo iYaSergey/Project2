@@ -9,7 +9,7 @@ namespace Data_Access_Layer
         private Db()
         {
             Map = new Map();
-            Tweets = TweetParser.ParseFile();
+            Tweets = Parser.ParseFile();
             States = new List<State>();
         }
         public static Db GetInstance()
@@ -26,7 +26,7 @@ namespace Data_Access_Layer
 
         public void ParseFile(string filename)
         {
-            Tweets = TweetParser.ParseFile(filename);
+            Tweets = Parser.ParseFile(filename);
         }
     }
 }

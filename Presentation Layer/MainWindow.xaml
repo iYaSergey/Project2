@@ -9,16 +9,28 @@
         Title="Project2" Height="697" Width="1144">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200*"/>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="931*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5"/>
-            <RowDefinition/>
-            <RowDefinition Height="5"/>
+            <RowDefinition Height="666"/>
         </Grid.RowDefinitions>
-        <ListBox x:Name="MapList" Grid.Column="1" Grid.Row="1" Background="#FFE6E6E6"/>
-        <gmaps:GMapControl x:Name="MapView" Loaded="MapView_Loaded" Margin="10,5,10,10" Grid.Column="2" Grid.Row="1" />
+        <GridSplitter HorizontalAlignment="Stretch" Grid.Column="1" Margin="0,0,2,0"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ListBox x:Name="MapList" Background="#FFE6E6E6" Loaded="MapList_Loaded" MouseDoubleClick="MapList_MouseDoubleClick">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Height="25" Text="{Binding Key}" FontSize="14" FontWeight="Bold"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="3,0,0,0">
+            <gmaps:GMapControl x:Name="MapView" Loaded="MapView_Loaded" />
+        </Grid>
     </Grid>
 </Window>

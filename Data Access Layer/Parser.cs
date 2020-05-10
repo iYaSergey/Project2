@@ -11,9 +11,9 @@ using Data_Layer;
 
 namespace Data_Access_Layer
 {
-    public class TweetParser
+    public class Parser : IParser
     {
-        public TweetParser()
+        public Parser()
         {
             Sentiments = new SortedList<string, SortedList<string, double>>();
         }
@@ -24,10 +24,10 @@ namespace Data_Access_Layer
         }
         public SortedList<string, SortedList<string, double>> Sentiments {get; set;}
 
-        public static List<Tweet> ParseFile(string file_name = @"../../../Data Access Layer/Data/cali_tweets2014.txt")
+        public static List<Tweet> ParseFile(string path)
         {
             List<Tweet> tweets = new List<Tweet>();
-            System.IO.StreamReader reader = new System.IO.StreamReader(file_name);
+            StreamReader reader = new StreamReader(path);
             string str;
             string text="";
             Regex regexLoc = new Regex(@"-?\d*\.\d*");
