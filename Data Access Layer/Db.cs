@@ -9,7 +9,7 @@ namespace Data_Access_Layer
         private Db()
         {
             Map = new Map();
-            Tweets = Parser.ParseFile();
+            Tweets = Parser.ParseFile("//////////////////////////");
             States = new List<State>();
         }
         public static Db GetInstance()
