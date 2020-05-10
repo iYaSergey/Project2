@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Data_Layer
 {
+    
     public class Map
     {
         public Map()
         {
-            States = new List<State>();
+            States = new Dictionary<string, State>();
         }
-        public List<State> States { get; set; }
+
+        public Dictionary<string,State> States { get; set; }
     }
 }
