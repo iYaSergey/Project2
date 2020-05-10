@@ -9,6 +9,8 @@ namespace Data_Access_Layer
         private Db()
         {
             Map = new Map();
+            Tweets = TweetParser.ParseFile();
+            States = new List<State>();
         }
         public static Db GetInstance()
         {
@@ -19,5 +21,12 @@ namespace Data_Access_Layer
             return db;
         }
         public Map Map { get; set; }
+        public List<Tweet> Tweets { get; set;}
+        public List<State> States { get; set; }
+
+        public void ParseFile(string filename)
+        {
+            Tweets = TweetParser.ParseFile(filename);
+        }
     }
 }

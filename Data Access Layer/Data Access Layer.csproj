@@ -49,12 +49,38 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateDAO.cs" />
     <Compile Include="TweetDAO.cs" />
+    <Compile Include="TweetParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data Layer\Data Layer.csproj">
       <Project>{4a2ce5c4-a175-4453-ba25-7ba64ed82c96}</Project>
       <Name>Data Layer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\cali_tweets2014.txt" />
+    <Content Include="Data\family_tweets2014.txt" />
+    <Content Include="Data\football_tweets2014.txt" />
+    <Content Include="Data\high_school_tweets2014.txt" />
+    <Content Include="Data\Images\cali.png" />
+    <Content Include="Data\Images\cali_no_dots.png" />
+    <Content Include="Data\Images\family.png" />
+    <Content Include="Data\Images\football.png" />
+    <Content Include="Data\Images\high_school.png" />
+    <Content Include="Data\Images\movie.png" />
+    <Content Include="Data\Images\shopping.png" />
+    <Content Include="Data\Images\snow.png" />
+    <Content Include="Data\Images\texas.png" />
+    <Content Include="Data\Images\weekend.png" />
+    <Content Include="Data\movie_tweets2014.txt" />
+    <Content Include="Data\shopping_tweets2014.txt" />
+    <Content Include="Data\snow_tweets2014.txt" />
+    <Content Include="Data\texas_tweets2014.txt" />
+    <Content Include="Data\weekend_tweets2014.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\sentiments.csv" />
+    <None Include="Data\states.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

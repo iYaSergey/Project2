@@ -14,6 +14,7 @@ namespace Presentation_Layer
         {
             InitializeComponent();
             //service.ParseTweets(path);
+
         }
     }
 }

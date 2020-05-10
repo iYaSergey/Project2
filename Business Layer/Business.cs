@@ -19,5 +19,10 @@ namespace Business_Layer
         static readonly IMap mapDAO = new MapDAO();
         static readonly IState stateDAO = new StateDAO();
         static readonly ITweet tweetDAO = new TweetDAO();
+
+        public void ParseTweets(string filename)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -11,5 +11,10 @@ namespace Service_Layer
         }
 
         static readonly IBusiness business = new Business();
+
+        public void ParseTweets(string filename)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
