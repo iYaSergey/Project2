@@ -14,7 +14,6 @@ using System.Data.SQLite;
 using Service_Layer;
 using Data_Layer;
 
-using GMap.NET.WindowsPresentation;
 using GMap.NET.MapProviders;
 using GMap.NET;
 using GMap.NET.WindowsForms;
@@ -67,9 +66,9 @@ namespace Presentation_Layer
         }
         private void LoadMap(string path)
         {
-            Map map = service.GetMap(path);
-            
             GMapOverlay overlay = new GMapOverlay("Polygons");
+
+            Map map = service.GetMap(path);
             foreach (var state in map.States)
             {
                 //List<List<PointLatLng>> gmap_polygons = new List<List<PointLatLng>>();

@@ -17,7 +17,10 @@ namespace Business_Layer
         {
             TweetWeightCalc();
         }
-
+        public Map GetMap(string path)
+        {
+            return null;
+        }
         public SortedList<string, string> GetFiles(string default_path)
         {
             SortedList<string, string> files = new SortedList<string, string>();
@@ -35,12 +38,6 @@ namespace Business_Layer
             }
             return files;
         }
-
-        public Map GetMap(string path)
-        {
-            return null;
-        }
-        
         private void TweetWeightCalc()
         {
             foreach (Tweet tw in db.Tweets)

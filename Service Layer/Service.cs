@@ -21,9 +21,5 @@ namespace Service_Layer
         {
             return business.GetMap(path);
         }
-        public Map ParseTweets(string path)
-        {
-            return business.ParseTweets(path);
-        }
     }
 }
