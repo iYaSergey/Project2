@@ -24,7 +24,7 @@
             <ListBox x:Name="MapList" Background="#FFE6E6E6" Loaded="MapList_Loaded" MouseDoubleClick="MapList_MouseDoubleClick">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Height="25" Text="{Binding Key}" FontSize="14" FontWeight="Bold"/>
+                        <TextBlock Height="25" Text="{Binding Key}" ToolTip="{Binding Value}" FontSize="14" FontWeight="Bold" Foreground="#FF474747" FontFamily="Comic Sans MS"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
