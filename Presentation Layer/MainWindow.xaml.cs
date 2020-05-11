@@ -3,14 +3,13 @@ using System.Windows.Input;
 using System.Net;
 using System.Windows.Documents;
 using System.Collections.Generic;
-using System.Windows.Controls;
 
 using Service_Layer;
 using Data_Layer;
 
 using GMap.NET.WindowsPresentation;
 using GMap.NET.MapProviders;
-using GMap.NET;
+using System.Windows.Controls;
 
 namespace Presentation_Layer
 {
@@ -26,17 +25,15 @@ namespace Presentation_Layer
         }
         private void MapView_Loaded(object sender, RoutedEventArgs e)
         {
-            GMaps.Instance.Mode = AccessMode.ServerAndCache;
-            MapView.MapProvider = GoogleMapProvider.Instance;
+            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
+            MapView.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
             MapView.MinZoom = 2;
             MapView.MaxZoom = 17;
-            MapView.Zoom = 3;
-            MapView.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
+            MapView.Zoom = 2;
+            MapView.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             MapView.CanDragMap = true;
             MapView.DragButton = MouseButton.Left;
             MapView.ShowCenter = false;
-            PointLatLng center = new PointLatLng(50, -90);
-            MapView.Position = center;
         }
         private void MapList_Loaded(object sender, RoutedEventArgs e)
         {
@@ -55,14 +52,9 @@ namespace Presentation_Layer
             object obj = MapList.SelectedItem;
             if (obj != null)
             {
-                KeyValuePair<string, string> kvp = (KeyValuePair<string, string>)obj;
-                string path = kvp.Value;
-                LoadMap(path);
+                KeyValuePair<string, string> path = (KeyValuePair<string, string>)obj;
+                service.ParseTweets(path.Value);
             }
-        }
-        private void LoadMap(string path)
-        {
-            //Map map = service.GetMap(path);
         }
     }
 }
