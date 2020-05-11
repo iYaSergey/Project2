@@ -84,7 +84,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Map.cs" />
     <Compile Include="State.cs" />
     <Compile Include="Tweet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

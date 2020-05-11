@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 
 using Business_Layer;
 using Data_Layer;
+
+using GMap.NET.WindowsForms;
 
 namespace Service_Layer
 {
@@ -17,9 +18,9 @@ namespace Service_Layer
         {
             return business.GetFiles(default_path);
         }
-        public Map GetMap(string path)
+        public List<GMapPolygon> GetPolygons(string path)
         {
-            return business.GetMap(path);
+            return business.GetPolygons(path);
         }
     }
 }

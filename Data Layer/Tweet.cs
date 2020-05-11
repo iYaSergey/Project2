@@ -18,8 +18,6 @@ namespace Data_Layer
             Location[1] = d2;
             Text = text;
         }
-
-
         public string Text { get; set; }
         public double Weight { get; set; }
         public double[] Location { get; set; }
