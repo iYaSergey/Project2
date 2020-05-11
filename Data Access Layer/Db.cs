@@ -13,7 +13,7 @@ namespace Data_Access_Layer
         private Db()
         {
             Map = new Map();
-            Tweets = TweetParser.ParseFile();
+            Tweets = Parser.ParseFile("//////////////////////////");
             States = new List<State>();
             Sentiments = new Dictionary<char, Dictionary<string, double>>();
             PolygonsDes();
@@ -73,7 +73,7 @@ namespace Data_Access_Layer
         }
         public void ParseFile(string filename)
         {
-            Tweets = TweetParser.ParseFile(filename);
+            Tweets = Parser.ParseFile(filename);
         }
     }
 }
