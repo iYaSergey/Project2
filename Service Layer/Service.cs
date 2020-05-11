@@ -17,6 +17,10 @@ namespace Service_Layer
         {
             return business.GetFiles(default_path);
         }
+        public Map GetMap(string path)
+        {
+            return business.GetMap(path);
+        }
         public Map ParseTweets(string path)
         {
             return business.ParseTweets(path);

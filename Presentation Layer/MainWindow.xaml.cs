@@ -52,9 +52,14 @@ namespace Presentation_Layer
             object obj = MapList.SelectedItem;
             if (obj != null)
             {
-                KeyValuePair<string, string> path = (KeyValuePair<string, string>)obj;
-                service.ParseTweets(path.Value);
+                KeyValuePair<string, string> kvp = (KeyValuePair<string, string>)obj;
+                string path = kvp.Value;
+                LoadMap(path);
             }
+        }
+        private void LoadMap(string path)
+        {
+            Map map = service.GetMap(path);
         }
     }
 }
