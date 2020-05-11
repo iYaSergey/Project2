@@ -17,7 +17,6 @@ namespace Data_Layer
         {
             Tweets = new List<Tweet>();
         }
-        public string Name { get; set; }
         public double Weight { get; set; }
         public List<Tweet> Tweets { get; set; }
         [JsonProperty("Polygons")]

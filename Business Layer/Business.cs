@@ -33,7 +33,16 @@ namespace Business_Layer
             TweetWeightCalc(sentiments, tweets);
             GroupTweets(states, polygons, tweets);
             StateWeightCalc(states);
+            SetColors(polygons, states);
 
+            return polygons;
+        }
+        private List<GMapPolygon> SetColors(List<GMapPolygon> polygons, Dictionary<string, State> states)
+        {
+            foreach (GMapPolygon polygon in polygons)
+            {
+                polygon.Fill = new SolidBrush(GetColor(states[polygon.Name]));
+            }
             return polygons;
         }
         private Dictionary<string, State> GroupTweets(Dictionary<string, State> states, List<GMapPolygon> polygons, List<Tweet> tweets)
@@ -56,7 +65,6 @@ namespace Business_Layer
             List<GMapPolygon> polygons = new List<GMapPolygon>();
             foreach (var state in states)
             {
-                Color color = GetColor(state.Value);
                 foreach (var polygon in state.Value.Polygons)
                 {
                     List<PointLatLng> gMapPolygon_coords = new List<PointLatLng>();
@@ -67,21 +75,30 @@ namespace Business_Layer
                         PointLatLng point = new PointLatLng(x, y);
                         gMapPolygon_coords.Add(point);
                     }
-                    GMapPolygon gMapPolygon = new GMapPolygon(gMapPolygon_coords, state.Key);
-                    //gMapPolygon.Fill = new SolidBrush(Color.FromArgb(50, Color.Red));
-                    gMapPolygon.Fill = new SolidBrush(color);
-                    gMapPolygon.Stroke = new Pen(Color.Black, 1);
+                    GMapPolygon gMapPolygon = new GMapPolygon(gMapPolygon_coords, state.Key)
+                    {
+                        Stroke = new Pen(Color.Black, 1)
+                    };
                     polygons.Add(gMapPolygon);
                 }
             }
             return polygons;
         }
-        public Color GetColor(State state)
+        private Color GetColor(State state)
         {
-            int red = 255;
-            int green = 255;
+            int red, green;
+            double weight = state.Weight;
+            if (weight == 0)
+            {
+                red = 0;
+                green = 0;
+            }
+            else
+            {
+                red = 255;
+                green = 255;
+            }
             Color color = Color.FromArgb(50, Color.FromArgb(red, green, 0));
-
             return color;
         }
         public SortedList<string, string> GetFiles(string default_path)

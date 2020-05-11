@@ -16,6 +16,5 @@ namespace Business_Layer
     {
         SortedList<string, string> GetFiles(string default_files);
         List<GMapPolygon> GetPolygons(string path);
-        Color GetColor(State state);
     }
 }
