@@ -8,5 +8,6 @@ namespace Service_Layer
     {
         SortedList<string, string> GetFiles(string default_path);
         Map ParseTweets(string path);
+        Map GetMap(string path);
     }
 }

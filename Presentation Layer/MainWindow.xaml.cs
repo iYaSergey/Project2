@@ -3,13 +3,20 @@ using System.Windows.Input;
 using System.Net;
 using System.Windows.Documents;
 using System.Collections.Generic;
+using System.Windows.Controls;
+using System.IO;
+using System.Windows.Ink;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 
 using Service_Layer;
 using Data_Layer;
 
 using GMap.NET.WindowsPresentation;
 using GMap.NET.MapProviders;
-using System.Windows.Controls;
+using GMap.NET;
+using GMap.NET.WindowsForms;
 
 namespace Presentation_Layer
 {
@@ -19,20 +26,20 @@ namespace Presentation_Layer
         public readonly IService service = new Service();
         public MainWindow()
         {
+            InitializeComponent();
             GMapProvider.WebProxy = WebRequest.GetSystemWebProxy();
             GMapProvider.WebProxy.Credentials = CredentialCache.DefaultNetworkCredentials;
-            InitializeComponent();
         }
-        private void MapView_Loaded(object sender, RoutedEventArgs e)
+        private void MapView_Load(object sender, System.EventArgs e)
         {
-            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
-            MapView.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
+            GMaps.Instance.Mode = AccessMode.ServerAndCache;
+            MapView.MapProvider = OpenStreetMapProvider.Instance;
             MapView.MinZoom = 2;
             MapView.MaxZoom = 17;
             MapView.Zoom = 2;
             MapView.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             MapView.CanDragMap = true;
-            MapView.DragButton = MouseButton.Left;
+            MapView.DragButton = MouseButtons.Left;
             MapView.ShowCenter = false;
         }
         private void MapList_Loaded(object sender, RoutedEventArgs e)
@@ -40,7 +47,7 @@ namespace Presentation_Layer
             SortedList<string, string> files = service.GetFiles(default_path);
             if (files == null)
             {
-                MessageBox.Show("Wrong default path.", "Error");
+                System.Windows.MessageBox.Show("Wrong default path.", "Error");
             }
             else
             {
@@ -52,8 +59,35 @@ namespace Presentation_Layer
             object obj = MapList.SelectedItem;
             if (obj != null)
             {
-                KeyValuePair<string, string> path = (KeyValuePair<string, string>)obj;
-                service.ParseTweets(path.Value);
+                KeyValuePair<string, string> kvp = (KeyValuePair<string, string>)obj;
+                string path = kvp.Value;
+                LoadMap(path);
+            }
+        }
+        private void LoadMap(string path)
+        {
+            Map map = service.GetMap(path);
+            
+            GMapOverlay overlay = new GMapOverlay("Polygons");
+            foreach (var state in map.States)
+            {
+                //List<List<PointLatLng>> gmap_polygons = new List<List<PointLatLng>>();
+                foreach (var polygon in state.Value.Polygons)
+                {
+                    List<PointLatLng> gMapPolygon_coords = new List<PointLatLng>();
+                    foreach (var coords in polygon)
+                    {
+                        double x = coords[0];
+                        double y = coords[1];
+                        PointLatLng point = new PointLatLng(x, y);
+                        gMapPolygon_coords.Add(point);
+                    }
+                    GMap.NET.WindowsForms.GMapPolygon gMapPolygon = new GMap.NET.WindowsForms.GMapPolygon(gMapPolygon_coords, state.Key);
+                    gMapPolygon.Fill = new SolidBrush(Color.FromArgb(50, Color.Red));
+                    gMapPolygon.Stroke = new Pen(Color.Red, 1);
+                    overlay.Polygons.Add(gMapPolygon);
+                    MapView.Overlays.Add(overlay);
+                }
             }
         }
     }

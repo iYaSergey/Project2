@@ -13,5 +13,6 @@ namespace Business_Layer
     {
         SortedList<string, string> GetFiles(string default_files);
         Map ParseTweets(string path);
+        Map GetMap(string path);
     }
 }

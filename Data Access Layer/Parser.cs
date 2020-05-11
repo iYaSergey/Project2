@@ -21,7 +21,7 @@ namespace Data_Access_Layer
         public static Dictionary<char, Dictionary<string, double>> SentimentsParse()
         {
             Dictionary<char, Dictionary<string, double>> Sentiments = new Dictionary<char, Dictionary<string, double>>();
-            System.IO.StreamReader reader = new System.IO.StreamReader("../../../Data Access Layer/Data/sentiments.csv");
+            StreamReader reader = new System.IO.StreamReader("../../../Data Access Layer/Data/sentiments.csv");
             string str;
             while (!reader.EndOfStream)
             {
