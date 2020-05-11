@@ -36,13 +36,12 @@ namespace Business_Layer
             return files;
         }
 
+        
         private void TweetWeightCalc()
         {
             foreach (Tweet tw in db.Tweets)
             {
-                //string str = tw.Text.ToLower();
-                string str = "abruptly-pinnate leaf absorbate abstrusity acacia melanoxylon";
-                double kekw = 0;
+                string str = tw.Text.ToLower();
                 int j = 0;
                 while(j<str.Length-1)
                 {
@@ -57,8 +56,7 @@ namespace Business_Layer
                             {
                                 if (sent.Key == subStr)
                                 {
-                                    //tw.Weight += sent.Value;
-                                    kekw += sent.Value;
+                                    tw.Weight += sent.Value;
                                     j += subStr.Length;
                                     flag = true;
                                     break;
@@ -104,9 +102,7 @@ namespace Business_Layer
                         }
                     }
                 }
-                int weight =0;
             }
-            
         }
         public Map ParseTweets(string path)
         {

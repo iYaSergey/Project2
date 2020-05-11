@@ -18,7 +18,6 @@ namespace Data_Access_Layer
         {
 
         }
-
         public static Dictionary<char, Dictionary<string, double>> SentimentsParse()
         {
             Dictionary<char, Dictionary<string, double>> Sentiments = new Dictionary<char, Dictionary<string, double>>();
