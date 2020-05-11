@@ -16,7 +16,7 @@ namespace Data_Access_Layer
         {
             Map = new Map();
             Map.States = Parser.PolygonsDes();
-            Tweets = Parser.ParseFile("../../../Data Access Layer/Data/cali_tweets2014.txt");
+            Tweets = Parser.ParseFile("../../../../Data Access Layer/Data/cali_tweets2014.txt");
             States = new List<State>();
             Sentiments = Parser.SentimentsParse();
         }

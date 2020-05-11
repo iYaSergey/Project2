@@ -9,6 +9,7 @@ using System.Windows.Ink;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
+using System.Data.SQLite;
 
 using Service_Layer;
 using Data_Layer;
@@ -22,7 +23,7 @@ namespace Presentation_Layer
 {
     public partial class MainWindow : Window
     {
-        string default_path = @"../../../Data Access Layer/Data/";
+        string default_path = @"../../../../Data Access Layer/Data/";
         public readonly IService service = new Service();
         public MainWindow()
         {
