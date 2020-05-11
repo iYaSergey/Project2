@@ -14,10 +14,7 @@ namespace Data_Access_Layer
         private static Db db;
         private Db()
         {
-            Map = new Map();
-            Map.States = Parser.PolygonsDes();
-            Tweets = Parser.ParseFile("../../../Data Access Layer/Data/cali_tweets2014.txt");
-            States = new List<State>();
+            States = Parser.PolygonsDes();
             Sentiments = Parser.SentimentsParse();
         }
         public static Db GetInstance()
@@ -28,13 +25,8 @@ namespace Data_Access_Layer
             }
             return db;
         }
-        public Map Map { get; set; }
+        public Dictionary<string, State> States { get; set; }
         public List<Tweet> Tweets { get; set;}
-        public List<State> States { get; set; }
         public Dictionary<char, Dictionary<string, double>> Sentiments { get; set; }
-        public void ParseFile(string filename)
-        {
-            Tweets = Parser.ParseFile(filename);
-        }
     }
 }

@@ -21,7 +21,7 @@ namespace Data_Access_Layer
         public static Dictionary<char, Dictionary<string, double>> SentimentsParse()
         {
             Dictionary<char, Dictionary<string, double>> Sentiments = new Dictionary<char, Dictionary<string, double>>();
-            StreamReader reader = new System.IO.StreamReader("../../../Data Access Layer/Data/sentiments.csv");
+            StreamReader reader = new StreamReader("../../../../Data Access Layer/Data/sentiments.csv");
             string str;
             while (!reader.EndOfStream)
             {
@@ -56,7 +56,7 @@ namespace Data_Access_Layer
         }
         public static Dictionary<string, State> PolygonsDes()
         {
-            string JsonString = new StreamReader(@"../../../Data Access Layer/Data/states.json").ReadToEnd();
+            string JsonString = new StreamReader(@"../../../../Data Access Layer/Data/states.json").ReadToEnd();
             return JsonConvert.DeserializeObject<Dictionary<string, State>>(JsonString);
         }
         public static List<Tweet> ParseFile(string path)

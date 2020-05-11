@@ -2,11 +2,13 @@
 
 using Data_Layer;
 
+using GMap.NET.WindowsForms;
+
 namespace Service_Layer
 {
     public interface IService
     {
         SortedList<string, string> GetFiles(string default_path);
-        Map GetMap(string path);
+        List<GMapPolygon> GetPolygons(string path);
     }
 }

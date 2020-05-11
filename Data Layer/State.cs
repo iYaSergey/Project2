@@ -9,6 +9,10 @@ namespace Data_Layer
 {
     public class State
     {
+        public void Add(Tweet tweet)
+        {
+            Tweets.Add(tweet);
+        }
         public State()
         {
             Tweets = new List<Tweet>();
@@ -16,7 +20,6 @@ namespace Data_Layer
         public string Name { get; set; }
         public double Weight { get; set; }
         public List<Tweet> Tweets { get; set; }
-
         [JsonProperty("Polygons")]
         public List<List<List<double>>> Polygons { get; set; }
     }
