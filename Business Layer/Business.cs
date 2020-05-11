@@ -12,10 +12,10 @@ namespace Business_Layer
 {
     public class Business : IBusiness
     {
-        static readonly IParser parser = new Parser();
+        static readonly Db db = Db.GetInstance();
         public Business()
         {
-
+            TweetWeightCalc();
         }
 
         public SortedList<string, string> GetFiles(string default_path)
@@ -34,6 +34,79 @@ namespace Business_Layer
                 return null;
             }
             return files;
+        }
+
+        private void TweetWeightCalc()
+        {
+            foreach (Tweet tw in db.Tweets)
+            {
+                //string str = tw.Text.ToLower();
+                string str = "abruptly-pinnate leaf absorbate abstrusity acacia melanoxylon";
+                double kekw = 0;
+                int j = 0;
+                while(j<str.Length-1)
+                {
+                    bool isGet = false;
+                    for (int i = str.Length-1; i > j;i--)
+                    {
+                        bool flag = false;
+                        string subStr = str.Substring(j,i-j+1);
+                        if (subStr[0] >= 'a' && subStr[0] <= 'z')
+                        {
+                            foreach (KeyValuePair<string, double> sent in db.Sentiments[subStr[0]])
+                            {
+                                if (sent.Key == subStr)
+                                {
+                                    //tw.Weight += sent.Value;
+                                    kekw += sent.Value;
+                                    j += subStr.Length;
+                                    flag = true;
+                                    break;
+                                }
+                            }
+                            if (!flag)
+                            {
+                                while (str[i]!=' ' && i > j)
+                                {
+                                    i--;
+                                }
+                            }
+                        }
+                        else 
+                        {
+                            foreach (KeyValuePair<string, double> sent in db.Sentiments['0'])
+                            {
+                                if (sent.Key == subStr)
+                                {
+                                    tw.Weight += sent.Value;
+                                    j += subStr.Length;
+                                    flag = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (flag)
+                        {
+                            isGet = true;
+                            break;
+                        }
+                    }
+                    if (!isGet)
+                    {
+                        while (str[j] != ' ' && j != str.Length-1)
+                        {
+                            j++;
+                        }
+                        if (str[j] == ' ')
+                        {
+                            j++;
+                        }
+                    }
+                }
+                int weight =0;
+            }
+            
         }
         public Map ParseTweets(string path)
         {

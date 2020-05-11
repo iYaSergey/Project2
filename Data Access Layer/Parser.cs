@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace Data_Access_Layer
 {
-    public class Parser : IParser
+    public class Parser
     {
         public Parser()
         {
@@ -88,7 +88,15 @@ namespace Data_Access_Layer
                 {
                     text = text.Replace(s.Value,"");
                 }
+                foreach (char c in text)
+                {
+                    if (char.IsPunctuation(c))
+                    {
+                        text = text.Replace(c.ToString(),"");
+                    }
+                }
                 Tweet tweet = new Tweet(double.Parse(d1), double.Parse(d2), text);
+                tweets.Add(tweet);
             }
             return tweets;
         }
