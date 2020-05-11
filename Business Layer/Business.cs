@@ -33,15 +33,28 @@ namespace Business_Layer
             TweetWeightCalc(sentiments, tweets);
             GroupTweets(states, polygons, tweets);
             StateWeightCalc(states);
-            SetColors(polygons, states);
+            int[] extreme_values = GetExtremes(states);
+            SetColors(polygons, states, extreme_values);
 
             return polygons;
         }
-        private List<GMapPolygon> SetColors(List<GMapPolygon> polygons, Dictionary<string, State> states)
+        private int[] GetExtremes(Dictionary<string, State> states)
+        {
+            int[] extreme_values = new int[2];
+            extreme_values[0] = 0;
+            extreme_values[1] = 0;
+            foreach (State state in states.Values)
+            {
+                if (state.Weight < 0 && state.Weight < extreme_values[1]) extreme_values[1] = Convert.ToInt32(state.Weight);
+                else if (state.Weight > 0 && state.Weight > extreme_values[0]) extreme_values[0] = Convert.ToInt32(state.Weight);
+            }
+            return extreme_values;
+        }
+        private List<GMapPolygon> SetColors(List<GMapPolygon> polygons, Dictionary<string, State> states, int[] extreme_values)
         {
             foreach (GMapPolygon polygon in polygons)
             {
-                polygon.Fill = new SolidBrush(GetColor(states[polygon.Name]));
+                polygon.Fill = new SolidBrush(GetColor(states[polygon.Name], extreme_values));
             }
             return polygons;
         }
@@ -84,21 +97,40 @@ namespace Business_Layer
             }
             return polygons;
         }
-        private Color GetColor(State state)
+        private Color GetColor(State state, int[] extreme_values)
         {
-            int red, green;
+            int red, green, x_red, x_green;
+            if (extreme_values[1] != 0)
+            {
+                x_red = Math.Abs(255 / extreme_values[1]);
+            }
+            else x_red = 255;
+            if (extreme_values[0] != 0)
+            {
+                x_green = 255 / extreme_values[0];
+            }
+            else x_green = 255;
             double weight = state.Weight;
             if (weight == 0)
-            {
-                red = 0;
-                green = 0;
-            }
-            else
             {
                 red = 255;
                 green = 255;
             }
-            Color color = Color.FromArgb(50, Color.FromArgb(red, green, 0));
+            else if (weight > 0)
+            {
+                red = 255 - Convert.ToInt32(weight) * x_green;
+                green = 255;
+            }
+            else
+            {
+                red = 255;
+                green = 255 - Convert.ToInt32(Math.Abs(weight)) * x_red;
+            }
+            if (green > 255) green = 255;
+            else if (green < 0) green = 0;
+            if (red > 255) red = 255;
+            else if (red < 0) red = 0;
+            Color color = Color.FromArgb(100, Color.FromArgb(red, green, 0));
             return color;
         }
         public SortedList<string, string> GetFiles(string default_path)
