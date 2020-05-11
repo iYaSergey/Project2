@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation_Layer"
-        xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+        xmlns:gmaps="clr-namespace:GMap.NET.WindowsForms;assembly=GMap.NET.WindowsForms"
         mc:Ignorable="d"
         Title="Project2" Height="697" Width="1144">
     <Grid>
@@ -30,7 +30,9 @@
             </ListBox>
         </Grid>
         <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="3,0,0,0">
-            <gmaps:GMapControl x:Name="MapView" Loaded="MapView_Loaded" />
+            <WindowsFormsHost>
+                <gmaps:GMapControl x:Name="MapView" Load="MapView_Load"/>
+            </WindowsFormsHost>
         </Grid>
     </Grid>
 </Window>
