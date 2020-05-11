@@ -33,24 +33,35 @@ namespace Business_Layer
             TweetWeightCalc(sentiments, tweets);
             GroupTweets(states, polygons, tweets);
             StateWeightCalc(states);
-            int[] extreme_values = GetExtremes(states);
+            double[] extreme_values = GetExtremes(states);
             SetColors(polygons, states, extreme_values);
 
             return polygons;
         }
-        private int[] GetExtremes(Dictionary<string, State> states)
+        private double[] GetExtremes(Dictionary<string, State> states)
         {
-            int[] extreme_values = new int[2];
+            double[] extreme_values = new double[2];
             extreme_values[0] = 0;
             extreme_values[1] = 0;
+            int pos_count = 0, neg_count = 0;
             foreach (State state in states.Values)
             {
-                if (state.Weight < 0 && state.Weight < extreme_values[1]) extreme_values[1] = Convert.ToInt32(state.Weight);
-                else if (state.Weight > 0 && state.Weight > extreme_values[0]) extreme_values[0] = Convert.ToInt32(state.Weight);
+                if (state.Weight < 0)
+                {
+                    extreme_values[1] -= state.Weight;
+                    neg_count++;
+                }
+                else if (state.Weight > 0)
+                {
+                    extreme_values[0] += state.Weight;
+                    pos_count++;
+                }
             }
+            extreme_values[1] /= neg_count;
+            extreme_values[0] /= pos_count;
             return extreme_values;
         }
-        private List<GMapPolygon> SetColors(List<GMapPolygon> polygons, Dictionary<string, State> states, int[] extreme_values)
+        private List<GMapPolygon> SetColors(List<GMapPolygon> polygons, Dictionary<string, State> states, double[] extreme_values)
         {
             foreach (GMapPolygon polygon in polygons)
             {
@@ -97,9 +108,11 @@ namespace Business_Layer
             }
             return polygons;
         }
-        private Color GetColor(State state, int[] extreme_values)
+        private Color GetColor(State state, double[] extreme_values)
         {
-            int red, green, x_red, x_green;
+            int red = 255, green = 255;
+            double x_red, x_green;
+            
             if (extreme_values[1] != 0)
             {
                 x_red = Math.Abs(255 / extreme_values[1]);
@@ -118,18 +131,58 @@ namespace Business_Layer
             }
             else if (weight > 0)
             {
-                red = 255 - Convert.ToInt32(weight) * x_green;
+                red = 255 - Convert.ToInt32(weight * x_green);
                 green = 255;
             }
             else
             {
                 red = 255;
-                green = 255 - Convert.ToInt32(Math.Abs(weight)) * x_red;
+                green = 255 - Convert.ToInt32(Math.Abs(weight) * x_red);
             }
             if (green > 255) green = 255;
             else if (green < 0) green = 0;
             if (red > 255) red = 255;
             else if (red < 0) red = 0;
+            
+
+            /*
+            double weight = state.Weight;
+            if (weight <= -1)
+            {
+                red = 255;
+                green = 0;
+            }
+            else if (weight > -1 && weight < 0)
+            {
+                red = 255;
+                green = 128;
+            }
+            else if (weight == 0)
+            {
+                red = 255;
+                green = 255;
+            }
+            else if (weight > 0 && weight <= 1)
+            {
+                red = 192;
+                green = 255;
+            }
+            else if (weight > 1 && weight <= 2)
+            {
+                red = 128;
+                green = 255;
+            }
+            else if (weight > 2 && weight <= 3)
+            {
+                red = 64;
+                green = 255;
+            }
+            else if (weight > 3)
+            {
+                red = 0;
+                green = 255;
+            }
+            */
             Color color = Color.FromArgb(100, Color.FromArgb(red, green, 0));
             return color;
         }
