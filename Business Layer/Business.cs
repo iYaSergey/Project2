@@ -108,9 +108,5 @@ namespace Business_Layer
                 }
             }
         }
-        public Map ParseTweets(string path)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
