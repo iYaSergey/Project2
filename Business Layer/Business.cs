@@ -36,6 +36,10 @@ namespace Business_Layer
             return files;
         }
 
+        public Map GetMap(string path)
+        {
+            return null;
+        }
         
         private void TweetWeightCalc()
         {
