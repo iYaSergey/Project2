@@ -10,6 +10,8 @@ namespace Data_Access_Layer
 {
     public interface IDAO
     {
+        void Clear();
+        void ClearStates();
         void SetTweets(string path);
         List<Tweet> GetTweets();
         Dictionary<string, State> GetStates();

@@ -24,6 +24,9 @@ namespace Business_Layer
         }
         public List<GMapPolygon> GetPolygons(string path)
         {
+            dao.Clear();
+            dao.ClearStates();
+
             dao.SetTweets(path);
             Dictionary<string, State> states = dao.GetStates();
             Dictionary<char, Dictionary<string, double>> sentiments = dao.GetSentiments();
