@@ -12,6 +12,7 @@ using Data_Layer;
 
 using GMap.NET.WindowsForms;
 using GMap.NET;
+using System.Windows.Media.Animation;
 
 namespace Business_Layer
 {
@@ -24,9 +25,6 @@ namespace Business_Layer
         }
         public List<GMapPolygon> GetPolygons(string path)
         {
-            dao.Clear();
-            dao.ClearStates();
-
             dao.SetTweets(path);
             Dictionary<string, State> states = dao.GetStates();
             Dictionary<char, Dictionary<string, double>> sentiments = dao.GetSentiments();
@@ -147,45 +145,6 @@ namespace Business_Layer
             if (red > 255) red = 255;
             else if (red < 0) red = 0;
             
-
-            /*
-            double weight = state.Weight;
-            if (weight <= -1)
-            {
-                red = 255;
-                green = 0;
-            }
-            else if (weight > -1 && weight < 0)
-            {
-                red = 255;
-                green = 128;
-            }
-            else if (weight == 0)
-            {
-                red = 255;
-                green = 255;
-            }
-            else if (weight > 0 && weight <= 1)
-            {
-                red = 192;
-                green = 255;
-            }
-            else if (weight > 1 && weight <= 2)
-            {
-                red = 128;
-                green = 255;
-            }
-            else if (weight > 2 && weight <= 3)
-            {
-                red = 64;
-                green = 255;
-            }
-            else if (weight > 3)
-            {
-                red = 0;
-                green = 255;
-            }
-            */
             Color color = Color.FromArgb(100, Color.FromArgb(red, green, 0));
             return color;
         }
@@ -211,64 +170,56 @@ namespace Business_Layer
             foreach (Tweet tw in tweets)
             {
                 string str = tw.Text.ToLower();
-                int j = 0;
-                while(j<str.Length-1)
+                str = str.Insert(0," ");
+                int k = 1;
+                for (int i = 0; i < str.Count(x => x == ' '); i++)
                 {
-                    bool isGet = false;
-                    for (int i = str.Length-1; i > j;i--)
+                    bool flag = true;
+                    if (str[k] >= 'a' && str[k] <= 'z')
                     {
-                        bool flag = false;
-                        string subStr = str.Substring(j,i-j+1);
-                        if (subStr[0] >= 'a' && subStr[0] <= 'z')
+                        foreach (KeyValuePair<string, double> sent in sentiments[str[k]].Reverse())
                         {
-                            foreach (KeyValuePair<string, double> sent in sentiments[subStr[0]])
+                            if (str.Contains(sent.Key))
                             {
-                                if (sent.Key == subStr)
+                                tw.Weight += sent.Value * str.Count(x => x.Equals(sent.Key));
+                                if (str.Contains(" " + sent.Key + " "))
                                 {
-                                    tw.Weight += sent.Value;
-                                    j += subStr.Length;
-                                    flag = true;
-                                    break;
+                                    str = str.Replace(" " + sent.Key + " ", " ");
                                 }
+                                flag = false;
+                                k = 1;
+                                break;
                             }
-                            if (!flag)
-                            {
-                                while (str[i]!=' ' && i > j)
-                                {
-                                    i--;
-                                }
-                            }
-                        }
-                        else 
-                        {
-                            foreach (KeyValuePair<string, double> sent in sentiments['0'])
-                            {
-                                if (sent.Key == subStr)
-                                {
-                                    tw.Weight += sent.Value;
-                                    j += subStr.Length;
-                                    flag = true;
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (flag)
-                        {
-                            isGet = true;
-                            break;
                         }
                     }
-                    if (!isGet)
+                    else 
                     {
-                        while (str[j] != ' ' && j != str.Length-1)
+                        foreach (KeyValuePair<string, double> sent in sentiments['0'].Reverse())
                         {
-                            j++;
+                            if (str.Contains(sent.Key))
+                            {
+                                tw.Weight += sent.Value * str.Count(x => x.Equals(sent.Key));
+                                if (str.Contains(" " + sent.Key + " "))
+                                {
+                                    str = str.Replace(" " + sent.Key + " ", " ");
+                                }
+                                flag = false;
+                                k = 1;
+                                break;
+                            }
                         }
-                        if (str[j] == ' ')
+                    }
+                    if (flag)
+                    {
+                        while (str[k] != ' ' && k != str.Length-1)
                         {
-                            j++;
+                            k++;
                         }
+                        if (str[k] == ' ') k++;
+                    }
+                    if (str.Length == 0 || k>= str.Length)
+                    {
+                        break;
                     }
                 }
             }
