@@ -27,6 +27,11 @@
                         <TextBlock Height="25" Text="{Binding Key}" ToolTip="{Binding Value}" FontSize="14" FontWeight="Bold" Foreground="#FF474747" FontFamily="Comic Sans MS"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Open" Click="MenuItem_Click"/>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
             </ListBox>
         </Grid>
         <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="3,0,0,0">
