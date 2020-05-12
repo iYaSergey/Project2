@@ -87,7 +87,7 @@ namespace Presentation_Layer
             Brush background = new SolidBrush(Color.Transparent);
             Font font = new Font("Arial", 9, System.Drawing.FontStyle.Bold);
             background.GetType();
-            GMarkerGoogle KOSTblL_MARKER = new GMarkerGoogle(new PointLatLng(53.6667, 23.8333), GMarkerGoogleType.yellow);
+            GMarkerGoogle KOSTblL_MARKER = new GMarkerGoogle(new PointLatLng(53.64443431, 23.85695636), GMarkerGoogleType.yellow);
             KOSTblL_MARKER.ToolTip = new GMapToolTip(KOSTblL_MARKER);
             KOSTblL_MARKER.ToolTip.Stroke.Color = Color.FromArgb(0, 255, 255, 255);
             KOSTblL_MARKER.ToolTip.Font = font;
