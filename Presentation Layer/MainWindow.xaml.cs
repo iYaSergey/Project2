@@ -69,6 +69,7 @@ namespace Presentation_Layer
         }
         private void LoadMap(string path)
         {
+            MapView.Overlays.Clear();
             GMapOverlay overlay = new GMapOverlay("Polygons");
             List<GMapPolygon> polygons = service.GetPolygons(path);
             foreach (GMapPolygon polygon in polygons)
