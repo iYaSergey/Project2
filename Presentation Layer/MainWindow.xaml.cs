@@ -17,6 +17,7 @@ using Data_Layer;
 using GMap.NET.MapProviders;
 using GMap.NET;
 using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
 
 namespace Presentation_Layer
 {
@@ -36,11 +37,13 @@ namespace Presentation_Layer
             MapView.MapProvider = OpenStreetMapProvider.Instance;
             MapView.MinZoom = 2;
             MapView.MaxZoom = 17;
-            MapView.Zoom = 2;
+            MapView.Zoom = 3;
             MapView.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
             MapView.CanDragMap = true;
             MapView.DragButton = MouseButtons.Left;
             MapView.ShowCenter = false;
+            PointLatLng center = new PointLatLng(50, -90);
+            MapView.Position = center;
         }
         private void MapList_Loaded(object sender, RoutedEventArgs e)
         {
@@ -72,8 +75,23 @@ namespace Presentation_Layer
             {
                 overlay.Polygons.Add(polygon);
             }
-            MapView.Overlays.Add(overlay);
-        }
 
+            #region PRESS F
+            Brush background = new SolidBrush(Color.Transparent);
+            Font font = new Font("Arial", 9, System.Drawing.FontStyle.Bold);
+            background.GetType();
+            GMarkerGoogle KOSTblL_MARKER = new GMarkerGoogle(new PointLatLng(53.6667, 23.8333), GMarkerGoogleType.yellow);
+            KOSTblL_MARKER.ToolTip = new GMapToolTip(KOSTblL_MARKER);
+            KOSTblL_MARKER.ToolTip.Stroke.Color = Color.FromArgb(0, 255, 255, 255);
+            KOSTblL_MARKER.ToolTip.Font = font;
+            KOSTblL_MARKER.ToolTip.Fill = background;
+            KOSTblL_MARKER.ToolTipText = "ПОСТАВЬТЕ 9 ЗА ПЕРВУЮ ЛАБУ, ПОЖАЛУЙСТА :(";
+            overlay.Markers.Add(KOSTblL_MARKER);
+            #endregion
+
+            MapView.Overlays.Add(overlay);
+            overlay.IsVisibile = false;
+            overlay.IsVisibile = true;
+        }
     }
 }
