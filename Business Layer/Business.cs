@@ -170,56 +170,63 @@ namespace Business_Layer
             foreach (Tweet tw in tweets)
             {
                 string str = tw.Text.ToLower();
-                str = str.Insert(0," ");
-                int k = 1;
-                for (int i = 0; i < str.Count(x => x == ' '); i++)
+                int j = 0;
+                while (j < str.Length - 1)
                 {
-                    bool flag = true;
-                    if (str[k] >= 'a' && str[k] <= 'z')
+                    bool isGet = false;
+                    for (int i = str.Length - 1; i > j; i--)
                     {
-                        foreach (KeyValuePair<string, double> sent in sentiments[str[k]].Reverse())
+                        bool flag = false;
+                        string subStr = str.Substring(j, i - j + 1);
+                        if (subStr[0] >= 'a' && subStr[0] <= 'z')
                         {
-                            if (str.Contains(sent.Key))
+                            Dictionary<string, double> sent = sentiments[subStr[0]];
+                            if (sent.Keys.Contains(subStr))
                             {
-                                tw.Weight += sent.Value * str.Count(x => x.Equals(sent.Key));
-                                if (str.Contains(" " + sent.Key + " "))
-                                {
-                                    str = str.Replace(" " + sent.Key + " ", " ");
-                                }
-                                flag = false;
-                                k = 1;
+                                tw.Weight += sent[subStr];
+                                j += subStr.Length-1;
+                                flag = true;
                                 break;
                             }
-                        }
-                    }
-                    else 
-                    {
-                        foreach (KeyValuePair<string, double> sent in sentiments['0'].Reverse())
-                        {
-                            if (str.Contains(sent.Key))
+                            if (!flag)
                             {
-                                tw.Weight += sent.Value * str.Count(x => x.Equals(sent.Key));
-                                if (str.Contains(" " + sent.Key + " "))
+                                while (str[i] != ' ' && i > j)
                                 {
-                                    str = str.Replace(" " + sent.Key + " ", " ");
+                                    i--;
                                 }
-                                flag = false;
-                                k = 1;
-                                break;
                             }
                         }
-                    }
-                    if (flag)
-                    {
-                        while (str[k] != ' ' && k != str.Length-1)
+                        else
                         {
-                            k++;
+                            foreach (KeyValuePair<string, double> sent in sentiments['0'])
+                            {
+                                Dictionary<string, double> senti = sentiments['0'];
+                                if (senti.Keys.Contains(subStr))
+                                {
+                                    tw.Weight += senti[subStr];
+                                    j += subStr.Length-1;
+                                    flag = true;
+                                    break;
+                                }
+                            }
                         }
-                        if (str[k] == ' ') k++;
+
+                        if (flag)
+                        {
+                            isGet = true;
+                            break;
+                        }
                     }
-                    if (str.Length == 0 || k>= str.Length)
+                    if (!isGet)
                     {
-                        break;
+                        while (str[j] != ' ' && j != str.Length - 1)
+                        {
+                            j++;
+                        }
+                        if (str[j] == ' ')
+                        {
+                            j++;
+                        }
                     }
                 }
             }
