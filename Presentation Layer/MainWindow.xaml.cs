@@ -59,16 +59,23 @@ namespace Presentation_Layer
         }
         private void MapList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            string path = GetPath();
+            if (path != null) LoadMap(path);
+        }
+        private string GetPath()
+        {
+            string path = null;
             object obj = MapList.SelectedItem;
             if (obj != null)
             {
                 KeyValuePair<string, string> kvp = (KeyValuePair<string, string>)obj;
-                string path = kvp.Value;
-                LoadMap(path);
+                path = kvp.Value;
             }
+            return path;
         }
         private void LoadMap(string path)
         {
+            MapView.Overlays.Clear();
             GMapOverlay overlay = new GMapOverlay("Polygons");
             List<GMapPolygon> polygons = service.GetPolygons(path);
             foreach (GMapPolygon polygon in polygons)
@@ -92,6 +99,11 @@ namespace Presentation_Layer
             MapView.Overlays.Add(overlay);
             overlay.IsVisibile = false;
             overlay.IsVisibile = true;
+        }
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            string path = GetPath();
+            if (path != null) LoadMap(path);
         }
     }
 }
