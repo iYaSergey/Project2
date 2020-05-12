@@ -10,5 +10,6 @@ namespace Service_Layer
     {
         SortedList<string, string> GetFiles(string default_path);
         List<GMapPolygon> GetPolygons(string path);
+        List<Tweet> GetTweets();
     }
 }

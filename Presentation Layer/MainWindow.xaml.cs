@@ -23,6 +23,7 @@ namespace Presentation_Layer
 {
     public partial class MainWindow : Window
     {
+        bool markers_visibility = true;
         string default_path = @"../../../../Data Access Layer/Data/";
         public readonly IService service = new Service();
         public MainWindow()
@@ -83,6 +84,18 @@ namespace Presentation_Layer
                 overlay.Polygons.Add(polygon);
             }
 
+            foreach (Tweet tweet in service.GetTweets())
+            {
+                GMarkerGoogleType type;
+                if (tweet.Weight > 0) type = GMarkerGoogleType.green_small;
+                else if (tweet.Weight < 0) type = GMarkerGoogleType.red_small;
+                else type = GMarkerGoogleType.yellow_small;
+                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(tweet.Location[0], tweet.Location[1]), type);
+                marker.ToolTipText = tweet.Text;
+                marker.IsVisible = markers_visibility;
+                overlay.Markers.Add(marker);
+            }
+
             #region PRESS F
             Brush background = new SolidBrush(Color.Transparent);
             Font font = new Font("Arial", 9, System.Drawing.FontStyle.Bold);
@@ -104,6 +117,24 @@ namespace Presentation_Layer
         {
             string path = GetPath();
             if (path != null) LoadMap(path);
+        }
+        private void ShowMarkers(object sender, RoutedEventArgs e)
+        {
+            markers_visibility = true;
+            if (MapView.Overlays != null && MapView.Overlays.Count != 0)
+                foreach (GMarkerGoogle marker in MapView.Overlays[0].Markers)
+                {
+                    marker.IsVisible = true;
+                }
+        }
+        private void DeleteMarkers(object sender, RoutedEventArgs e)
+        {
+            markers_visibility = false;
+            if (MapView.Overlays != null && MapView.Overlays.Count != 0)
+                foreach (GMarkerGoogle marker in MapView.Overlays[0].Markers)
+                {
+                    marker.IsVisible = false;
+                }
         }
     }
 }

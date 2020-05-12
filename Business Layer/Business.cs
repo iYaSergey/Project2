@@ -23,6 +23,10 @@ namespace Business_Layer
         {
 
         }
+        public List<Tweet> GetTweets()
+        {
+            return dao.GetTweets();
+        }
         public List<GMapPolygon> GetPolygons(string path)
         {
             dao.Clear();

@@ -22,5 +22,9 @@ namespace Service_Layer
         {
             return business.GetPolygons(path);
         }
+        public List<Tweet> GetTweets()
+        {
+            return business.GetTweets();
+        }
     }
 }

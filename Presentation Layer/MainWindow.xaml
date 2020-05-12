@@ -9,19 +9,20 @@
         Title="Project2" Height="697" Width="1144">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200*"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="931*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="3"/>
+            <ColumnDefinition Width="933.167"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="666"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <GridSplitter HorizontalAlignment="Stretch" Grid.Column="1" Margin="0,0,2,0"/>
-        <Grid>
+        <GridSplitter HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1"/>
+        <Grid Grid.Row="1" Background="#FFF0F0F0">
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <ListBox x:Name="MapList" Background="#FFE6E6E6" Loaded="MapList_Loaded" MouseDoubleClick="MapList_MouseDoubleClick">
+            <ListBox x:Name="MapList" Background="#FFF0F0F0" Loaded="MapList_Loaded" MouseDoubleClick="MapList_MouseDoubleClick" BorderBrush="{x:Null}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Height="25" Text="{Binding Key}" ToolTip="{Binding Value}" FontSize="14" FontWeight="Bold" Foreground="#FF474747" FontFamily="Comic Sans MS"/>
@@ -34,10 +35,18 @@
                 </ListBox.ContextMenu>
             </ListBox>
         </Grid>
-        <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="3,0,0,0">
+        <Grid Grid.Column="2" Margin="0.167,0,0,0" Grid.Row="1">
             <WindowsFormsHost>
                 <gmaps:GMapControl x:Name="MapView" Load="MapView_Load"/>
             </WindowsFormsHost>
         </Grid>
+        <Menu Grid.ColumnSpan="3" BorderThickness="0">
+            <MenuItem Header="Settings" Height="25" FontSize="14">
+                <MenuItem Header="Markers">
+                    <MenuItem Header="On" Click="ShowMarkers"/>
+                    <MenuItem Header="Off" Click="DeleteMarkers"/>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>
