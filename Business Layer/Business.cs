@@ -152,7 +152,7 @@ namespace Business_Layer
             if (red > 255) red = 255;
             else if (red < 0) red = 0;
             
-            Color color = Color.FromArgb(100, Color.FromArgb(red, green, 0));
+            Color color = Color.FromArgb(200, Color.FromArgb(red, green, 0));
             return color;
         }
         public SortedList<string, string> GetFiles(string default_path)
