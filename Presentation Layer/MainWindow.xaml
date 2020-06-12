@@ -9,7 +9,7 @@
         Title="Project2" Height="697" Width="1144">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="202*"/>
             <ColumnDefinition Width="3"/>
             <ColumnDefinition Width="933*"/>
         </Grid.ColumnDefinitions>
